@@ -59,18 +59,15 @@ func (m *Manager) EnsureSudoer(username string) error {
 	return nil
 }
 
-func (m *Manager) SetupPassword(username, hash string) error {
-	if hash != "" {
-		cmd := exec.Command("usermod", "-p", hash, username)
-		if output, err := cmd.CombinedOutput(); err != nil {
-			return fmt.Errorf("usermod password for %q: %w: %s", username, err, strings.TrimSpace(string(output)))
-		}
-		return nil
+func (m *Manager) SetupPassword(username, password string) error {
+	if password == "" {
+		password = "!"
 	}
 
-	cmd := exec.Command("usermod", "-p", "!", username)
+	cmd := exec.Command("chpasswd", "-e")
+	cmd.Stdin = strings.NewReader(fmt.Sprintf("%s:%s\n", username, password))
 	if output, err := cmd.CombinedOutput(); err != nil {
-		return fmt.Errorf("usermod password for %q: %w: %s", username, err, strings.TrimSpace(string(output)))
+		return fmt.Errorf("chpasswd password for %q: %w: %s", username, err, strings.TrimSpace(string(output)))
 	}
 	return nil
 }

@@ -71,13 +71,13 @@ func (c *Client) fetch(path string) (result string, err error) {
 		return "", nil
 	}
 
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("fetch %q: unexpected status %s", path, resp.Status)
+	}
+
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", fmt.Errorf("read response for %q: %w", path, err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("fetch %q: unexpected status %s", path, resp.Status)
 	}
 
 	value := strings.TrimSpace(string(body))
