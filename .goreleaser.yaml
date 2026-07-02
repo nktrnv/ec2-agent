@@ -29,7 +29,7 @@ nfpms:
     formats:
       - deb
       - rpm
-    bindir: /usr/local/bin
+    bindir: /usr/bin
     contents:
       - src: systemd/ec2-agent.service
         dst: /lib/systemd/system/ec2-agent.service
