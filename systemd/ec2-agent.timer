@@ -1,0 +1,11 @@
+[Unit]
+Description=Run EC2 agent periodically
+
+[Timer]
+Unit=ec2-agent.service
+OnBootSec=0
+OnUnitActiveSec=30
+AccuracySec=1
+
+[Install]
+WantedBy=timers.target
