@@ -5,4 +5,4 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/ec2-agent
+ExecStart=/usr/bin/ec2-agent
