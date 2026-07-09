@@ -1,0 +1,8 @@
+[Unit]
+Description=Synchronizes login credentials from the Instance Metadata Service (IMDS)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ec2-agent

@@ -1,0 +1,55 @@
+version: 2
+
+project_name: ec2-agent
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+    main: ./cmd/ec2-agent
+    binary: ec2-agent
+
+archives:
+  - formats: [tar.gz]
+    files:
+      - README.md
+
+nfpms:
+  - id: packages
+    file_name_template: "{{ .PackageName }}_{{ .Os }}_{{ .Arch }}"
+    vendor: ROCKIT
+    maintainer: Rockit Cloud Team <devel@k2.cloud>
+    description: Synchronizes login credentials from EC2 Instance Metadata Service
+    formats:
+      - deb
+      - rpm
+    bindir: /usr/bin
+    contents:
+      - src: systemd/ec2-agent.service
+        dst: /lib/systemd/system/ec2-agent.service
+      - src: systemd/ec2-agent.timer
+        dst: /lib/systemd/system/ec2-agent.timer
+    overrides:
+      deb:
+        dependencies:
+          - systemd
+          - sudo
+          - passwd
+      rpm:
+        dependencies:
+          - systemd
+          - sudo
+          - shadow-utils
+    scripts:
+      postinstall: scripts/postinstall.sh
+      preremove: scripts/preremove.sh
+
+changelog:
+  use: github-native
