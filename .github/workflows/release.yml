@@ -31,5 +31,5 @@ jobs:
           AWS_REGION: ${{ vars.AWS_REGION }}
           S3_BUCKET: ${{ secrets.S3_BUCKET }}
           S3_ENDPOINT: ${{ vars.S3_ENDPOINT }}
-          AWS_REQUEST_CHECKSUM_CALCULATION: when_required
-          AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+          AWS_REQUEST_CHECKSUM_CALCULATION: when_supported
+          AWS_RESPONSE_CHECKSUM_VALIDATION: when_supported
