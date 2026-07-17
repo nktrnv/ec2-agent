@@ -57,7 +57,7 @@ blobs:
     region: "{{ .Env.AWS_REGION }}"
     endpoint: "{{ .Env.S3_ENDPOINT }}"
     directory: "{{ .Tag }}"
-#    s3_force_path_style: false
+    s3_force_path_style: false
   - provider: s3
     bucket: "{{ .Env.S3_BUCKET }}"
     region: "{{ .Env.AWS_REGION }}"
