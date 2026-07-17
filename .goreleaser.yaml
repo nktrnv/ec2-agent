@@ -51,5 +51,17 @@ nfpms:
       postinstall: scripts/postinstall.sh
       preremove: scripts/preremove.sh
 
+blobs:
+  - provider: s3
+    bucket: "{{ .Env.S3_BUCKET }}"
+    region: "{{ .Env.AWS_REGION }}"
+    endpoint: "{{ .Env.S3_ENDPOINT }}"
+    directory: "{{ .Tag }}"
+  - provider: s3
+    bucket: "{{ .Env.S3_BUCKET }}"
+    region: "{{ .Env.AWS_REGION }}"
+    endpoint: "{{ .Env.S3_ENDPOINT }}"
+    directory: "latest"
+
 changelog:
   use: github-native
